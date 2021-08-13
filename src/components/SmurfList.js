@@ -1,8 +1,12 @@
 import React from 'react';
 import Smurf from './Smurf';
 
- const SmurfList = ()=> {
-    const isLoading = false;
+import { fetchSmurfs } from '../actions';
+import { connect } from 'react-redux'
+
+ const SmurfList = (props)=> {
+    const { smurfs, isLoading, error } = props
+    // const isLoading = false;
     const testSmurf = {
         id:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
         name:'Poppa Smurf',
@@ -15,12 +19,33 @@ import Smurf from './Smurf';
         return <h1>Loading...</h1>;
     }
 
+    if (error) {
+        return <h1>Error: {error}</h1>
+    }
+
     return(<div className="listContainer">
         <Smurf smurf={testSmurf}/>
+        {smurfs.map(d => (
+            <div className="card-body">
+            <h3 className="card-title">{d.name}</h3>
+                <hr/>
+                <p className="card-text"><b>Position:</b> {d.position}</p>
+                <p className="card-text"><b>Nickname:</b> {d.nickname}</p>
+                <p className="card-text"><b>Description:</b> {d.description}</p>
+            </div>
+        ))}
     </div>);
 }
 
-export default SmurfList;
+const mapStateToProps = state => {
+    return {
+        smurfs: state.smurfs,
+        isLoading: state.isLoading,
+        error: state.error
+    }
+}
+
+export default connect(mapStateToProps, { fetchSmurfs })(SmurfList);
 
 //Task List:
 //1. Connect the smurfs and loading state values to the SmurfList component.

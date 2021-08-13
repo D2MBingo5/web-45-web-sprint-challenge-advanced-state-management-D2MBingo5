@@ -5,7 +5,7 @@ export const fetchSmurfs = () => {
         dispatch({type: FETCH_START})
         axios.get(`http://localhost:3333/smurfs`)
             .then(res => {
-                console.log(res) // temporary
+                console.log('fetchSmurfs', res.data) // temporary
             })
             .catch(err => {
                 dispatch(fetchFail(err))
