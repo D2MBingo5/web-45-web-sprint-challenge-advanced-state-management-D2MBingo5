@@ -9,15 +9,21 @@ const reducer = (state = initialState, action)=>{
     switch(action.type) {
         case('FETCH_START'):
             return({
-
+                ...state,
+                isLoading: true,
+                error: ''
             });
         case('FETCH_SUCCESS'):
             return({
-
+                ...state,
+                smurfs: action.payload,
+                isLoading: false
             });
         case('FETCH_FAIL'):
             return({
-
+                ...state,
+                error: action.payload,
+                isLoading: false
             });
         case('SMURF_ADD'):
             return({
